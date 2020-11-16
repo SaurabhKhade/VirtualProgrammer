@@ -1,0 +1,194 @@
+{% extends 'base.html' %}
+
+{% block title %} VirtualProgrammer/Blog {% endblock %}
+
+
+
+{% block css %}
+<style type="text/css" media="all">
+	.icon {
+		width: 80%;
+		height: 100px;
+	}
+	.reply-box {
+		padding-left: 5px;
+		padding-top: 5px;
+		margin-left: -60px;
+		margin-bottom: 2px;
+	}
+	pre {
+		margin-left: 30px;
+		padding: 10px;
+		border: 2px solid #24f700;
+		border-radius: 13px;
+		background-color: black;
+		color: #07ff0c;
+		overflow: scroll;
+		max-height: 400px;
+	}
+</style>
+{% endblock %}
+
+{% block body %}
+
+{% load tags %}
+<!-- Blog -->
+<div class="container px-2">
+	<div class="rounded border border-gray box-shadow my-3 p-2">
+		<div class="text-center">
+			<h3>{{blog.title}}</h3>
+		</div>
+		<div>
+			<p class="my-1">
+				Author: {{blog.author}}
+			</p>
+			<p class="my-1">
+				Uploaded on: {{blog.date}}
+			</p>
+		</div>
+		<div class="dropdowm-divider border-gray border"></div>
+		<div style="overflow-wrap: anywhere;" class="border-gray border rounded px-1 py-3 my-3">
+			{{blog.blog|safe}}
+			<div class="text-right">
+
+				<button class="btn btn-primary mx-2 justify-self-end" id="likebtn"> Like </button>
+			</div>
+		</div>
+		<div class="dropdowm-divider border-gray border"></div>
+		<div class="text-right mt-1 mr-2">
+			<small>
+				<i class="fa fa-heart mr-1" id="like"> {{likes}}</i>
+				<i class="fas fa-comments mr-1" id="comment"> {{tot_comments}}</i>
+				<i class="fa fa-eye mr-1" id="views"> {{views}}</i>
+			</small>
+		</div>
+	</div>
+</div>
+<!-- Blog -->
+
+
+<!-- commentBox -->
+<div class="container px-2">
+	<form class="rounded border border-gray box-shadow my-3 p-2" action="/blog/postComment" method="post">
+		{% if user.is_authenticated %}
+		{% csrf_token %}
+		<div class="form-row align-items-center">
+			<div class="col-sm-3 my-1">
+				<label class="sr-only" for="commentBox">Leave a Comment</label>
+				<input type="text" class="form-control" id="commentBox" name="comment" placeholder=" Leave a Comment">
+			</div>
+			<input type="hidden" name="blogid" id="blogid" value="{{blog.id}}" />
+			<input type="hidden" name="parent" id="parent" value="" />
+			<div class="col-auto my-1">
+				<button type="submit" class="btn btn-primary">Submit</button>
+			</div>
+		</div>
+		{% else %}
+		<div class="form-row align-items-center my-1 mx-2">
+			<p>Please Login first to post a comment</p>
+		</div>
+		{% endif %}
+	</form>
+</div>
+<!-- commentBox -->
+
+
+<!-- Comments -->
+<div class="container px-2 my-2">
+	<div class="my-3 px-2 mx-0">
+		<h3 class="my-3">Comments({{tot_comments}})</h3>
+	</div>
+</div>
+{% for comment in comments %}
+<div class="container px-2 my-2">
+	<div class="row border border-gray box-shadow px-2 rounded mx-0">
+		<div class="col-3 col-sm-2 justify-content-center align-items-center">
+			<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-person-circle icon" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+				<path d="M13.468 12.37C12.758 11.226 11.195 10 8 10s-4.757 1.225-5.468 2.37A6.987 6.987 0 0 0 8 15a6.987 6.987 0 0 0 5.468-2.63z" />
+				<path fill-rule="evenodd" d="M8 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+				<path fill-rule="evenodd" d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zM0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8z" />
+			</svg>
+		</div>
+		<div class="col">
+			<div class="d-flex flex-column">
+				<div>
+					<p class="my-0">
+						{{comment.user.username}}
+					</p>
+					<small class="text-muted my-0">{{comment.dateTime}}</small>
+				</div>
+				<div class="dropdowm-divider border border-gray"></div>
+				<div>
+					<p>
+						{{comment.comment}}
+					</p>
+				</div>
+				<div class="d-flex justify-content-end mb-1">
+					<button class="btn btn-primary btn-sm" type="button" data-toggle="collapse" data-target="#reply-{{comment.id}}" aria-expanded="false" aria-controls="reply-{{comment.id}}">
+						<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-reply-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+							<path d="M9.079 11.9l4.568-3.281a.719.719 0 0 0 0-1.238L9.079 4.1A.716.716 0 0 0 8 4.719V6c-1.5 0-6 0-7 8 2.5-4.5 7-4 7-4v1.281c0 .56.606.898 1.079.62z" />
+						</svg>
+						Reply
+					</button>
+				</div>
+				<div class="collapse" id="reply-{{comment.id}}">
+					<div class="card card-body reply-box">
+						{% if user.is_authenticated %}
+						<form class="form-inline p-1" action="/blog/postComment" method="post">
+							{% csrf_token %}
+							<input type="text" class="form-control mb-1 mr-sm-1" id="reply" placeholder="Reply this Comment" name="comment">
+							<input type="hidden" name="blogid" value="{{blog.id}}" />
+							<input type="hidden" name="parent" value="{{comment.id}}" />
+							<button type="submit" class="btn btn-primary mb-1">Post</button>
+						</form>
+						{% else %}
+						<div>
+							<p>Please Login first to reply this comment</p>
+						</div>
+						{% endif %}
+					</div>
+				</div>
+				<div class="reply-box">
+					{% if replyList|get_val:comment.id %}
+					<div class="border border-gray box-shadow rounded px-2 mb-1">
+						{% for reply in replyList|get_val:comment.id %}
+						<div class="mb-1">
+							<small class="text-muted">{{reply.user.username}} replied</small><br />
+							{{reply.comment}}
+						</div>
+						{% endfor %}
+					</div>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endfor %}
+
+<!-- Comments -->
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript">
+	window.CSRF_TOKEN = "{{ csrf_token }}";
+</script>
+<script type="text/javascript" charset="utf-8">
+	$(function() {
+		$('#likebtn').click(function() {
+			$.ajax({
+				url: '/like/',
+				type: 'POST',
+				data: {csrfmiddlewaretoken: window.CSRF_TOKEN,
+					id:'{{blog.id}}'
+				},
+				success: function(result) {
+					if (result['status'] == 'success') {
+						$('#like').text(result['likes'])
+					}
+				}
+			});
+		})
+	})
+</script>
+{% endblock %}

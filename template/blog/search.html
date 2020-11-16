@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block title %} VirtualProgrammer/SearchResult {% endblock %}
+
+{% block body %}
+{% load tags %}
+<div class="alert alert-{{resultcolor}} alert-dismissible fade show" role="alert">
+	<strong>{{count}}</strong> results fetched.
+	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+		<span aria-hidden="true">&times;</span>
+	</button>
+</div>
+
+
+{% if not results %}
+<div class="p-5">
+	<p style="overflow-wrap: anywhere;">
+		Your search - <span class="font-weight-bold">{{search | truncatechars:50 }}</span> - did not match any documents.
+	</p>
+	<p>
+		Suggestions:
+	</p>
+	<ul>
+		<li>Make sure that all words are spelled correctly.</li>
+		<li>Try different keywords.</li>
+		<li>Try more general words.</li>
+		<li>Try fewer keywords.</li>
+	</ul>
+</div>
+{% endif %}
+
+{% for blog in results %}
+<div class="container">
+	<div class="p-2 border rounded border-gray box-shadow my-2">
+		<div>
+			<small class="text-muted">
+				By: {{blog.author}}<br />
+				on: {{blog.date}}
+			</small>
+			<div class="dropdown-divider border-gray"></div>
+			<div>
+				<h4>{{blog.title}}</h4>
+				<div class="preview" style="overflow-wrap: anywhere;">
+					<p>
+						{{blog.blog |safe|truncatechars:200}}
+					</p>
+				</div>
+				<a class="btn btn-info btn-small" role='button' href="{{blog.title}}">Read More</a>
+			</div>
+			<div class="dropdown-divider border-gray"></div>
+			<div class="text-right">
+				<small class="text-muted">
+					<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-heart-fill ml-2" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+						<path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z" />
+					</svg>  {{ insights|lookup:blog.id|list_val:0 }}
+					<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-chat-right-text-fill ml-2" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+						<path fill-rule="evenodd" d="M16 2a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h9.586a1 1 0 0 1 .707.293l2.853 2.853a.5.5 0 0 0 .854-.353V2zM3.5 3a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 2.5a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 2.5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5z" />
+					</svg>  {{ insights|lookup:blog.id|list_val:1 }}
+					<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-people-fill ml-2" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+						<path fill-rule="evenodd" d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-5.784 6A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216zM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z" />
+					</svg>  {{ insights|lookup:blog.id|list_val:2 }}
+				</small>
+			</div>
+		</div>
+	</div>
+</div>
+{% endfor %}
+
+{% endblock %}

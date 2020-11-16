@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+
+{% block title %} About Virtual Programmer {% endblock %}
+
+{% block about-active %} active {% endblock %}
+
+{% block body %}
+
+<div class="container my-3">
+	<div class="jumbotron  border text-center">
+		<p class="lead">
+			About
+		</p>
+		<h1>Virtual Programmer</h1>
+	</div>
+</div>
+
+<div class="jumbotron jumbotron-fluid text-center my-3 border rounded bg-dark text-white">
+	<h2>Stats</h2>
+</div>
+
+<div class="container">
+	<div class="jumbotron text-center border my-1">
+		<h3>Total Members: {{members}}</h3>
+	</div>
+</div>
+
+<div class="container">
+	<div class="jumbotron text-center border my-1">
+		<h3>Total Blogs: {{blogs}}</h3>
+	</div>
+</div>
+
+<div class="container">
+	<div class="jumbotron text-center border my-1">
+		<h3>Total Blog Views: {{views}}</h3>
+	</div>
+</div>
+
+<div class="container">
+	<div class="jumbotron text-center border my-1">
+		<h3>Total Blog Likes: {{likes}}</h3>
+	</div>
+</div>
+
+<div class="container">
+	<div class="jumbotron text-center border my-1">
+		<h3>Total Blog Comments: {{comments}}</h3>
+	</div>
+</div>
+
+<div class="container">
+	<div class="jumbotron text-center border my-1">
+		<h3>Total Comment Replies: {{replies}}</h3>
+	</div>
+</div>
+
+<div class="jumbotron jumbotron-fluid text-center my-3 border rounded bg-dark text-white">
+	<h2>About Blog</h2>
+</div>
+
+<div class="container">
+	<div class="jumbotron text-center border my-1">
+		<h6>This is a purely programming blog. In this blog we will discuss all programming languages one by one right from the beginning. We will discuss about Web Development (with Django) and Android App Development (with Java) and many programming languages like C, C++, Java, Python,  markup language (HTML), Style Sheet language (CSS) and many more. Its just a start. You can also post your doubts as a comments and i will surely solve them.</h6>
+	</div>
+</div>
+
+<div class="jumbotron jumbotron-fluid text-center my-3 border rounded bg-dark text-white">
+	<h2>Who I Am</h2>
+</div>
+
+<div class="container">
+	<div class="jumbotron border my-1">
+		<div class="row">
+			<div class="col-3 text-center">
+				<h5>Name:</h5>
+			</div>
+			<div class="col-9">
+				<h5>Saurabh Shankar Khade</h5>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-3 text-center"></div>
+			<div class="col-9">
+				<h5>SY CSE Student</h5>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-3 text-center">
+				<h6>College:</h6>
+			</div>
+			<div class="col-9">
+				<h6>Annasaheb Dange College of Engineering and Technology, Ashta</h6>
+				<h6>Sangli</h6>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="container">
+	<div class="jumbotron border my-1">
+		<h6>I am a Computer Science and Engineering (CSE) student at Annasaheb Dange College of Engineering and Technology, Ashta (ADCET), currently in 3rd Semester. I have good knowledge of Python, C, C++, Django, HTML, CSS etc. and i am discussing all programming languages here in this blog. Main motto behind this blog is to practice all concepts i know and also to sharpen my skills. My thinking is that if you are trying to explain something to a person, then you are learning more and more. So, i am trying to explain each and everything through this blog.</h6>
+		<h5>*This whole blog is created by myself only with Bootstrap and Django and little help of google.</h5>
+		<h6>My permanent Adress is At Kagani Post Kalkundri Tahsil Chandgad District Kolhapur Maharashtra India (PIN Code: 416 508) and my Current Adress At/Post Ashta Tahsil Walwa District Sangli Maharashtra India (PIN Code: 416 301)</h6>
+	</div>
+</div>
+
+{% endblock %}
