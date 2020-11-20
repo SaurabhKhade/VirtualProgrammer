@@ -11,9 +11,15 @@
 		max-height: 200px!important;
 		max-width: 300px!important;
 	} */
-	img{
+	img {
 		padding: 0!important;
 		border: none!important;
+	}
+	.carousel-item .container .jumbotron {
+		height: 120px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
 	}
 </style>
 {% endblock %}
@@ -26,7 +32,7 @@
 		<h3 class="lead">
 			Welcome to the
 		</h3>
-		<img src='{% static "img/icon-index.png" %}' alt="image" class="img-thumbnail rounded mx-auto d-block"/>
+		<img src='{% static "img/icon-index.png" %}' alt="image" class="img-thumbnail rounded mx-auto d-block" />
 		<p class="lead">
 			The best Blog to learn programming languages like C, C++, Java, Python, frameworks like Django and Web Development
 		</p>
@@ -35,16 +41,71 @@
 	</div>
 </div>
 
-<div class="container">
-	<div class="jumbotron border text-center">
-		<h3>Total Blogs: {{tot_blogs}}</h3>
+
+<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+	<ol class="carousel-indicators">
+		<li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+		<li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+		<li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+		<li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
+		<li data-target="#carouselExampleIndicators" data-slide-to="4"></li>
+		<li data-target="#carouselExampleIndicators" data-slide-to="5"></li>
+	</ol>
+	<div class="carousel-inner">
+		<div class="carousel-item active" data-interval="2500">
+			<div class="container">
+				<div class="jumbotron text-center border my-1">
+					<h3>Total Members: {{tot_members}}</h3>
+				</div>
+			</div>
+		</div>
+		<div class="carousel-item" data-interval="2500">
+			<div class="container">
+				<div class="jumbotron text-center border my-1">
+					<h3>Total Blogs: {{tot_blogs}}</h3>
+				</div>
+			</div>
+		</div>
+		<div class="carousel-item" data-interval="2500">
+			<div class="container">
+				<div class="jumbotron text-center border my-1">
+					<h3>Total Blog Views: {{tot_views}}</h3>
+				</div>
+			</div>
+		</div>
+		<div class="carousel-item" data-interval="2500">
+			<div class="container">
+				<div class="jumbotron text-center border my-1">
+					<h3>Total Blog Likes: {{tot_likes}}</h3>
+				</div>
+			</div>
+		</div>
+		<div class="carousel-item" data-interval="2500">
+			<div class="container">
+				<div class="jumbotron text-center border my-1">
+					<h3>Total Blog Comments: {{tot_comments}}</h3>
+				</div>
+			</div>
+		</div>
+		<div class="carousel-item" data-interval="2500">
+			<div class="container">
+				<div class="jumbotron text-center border my-1">
+					<h3>Total Comment Replies: {{tot_replies}}</h3>
+				</div>
+			</div>
+		</div>
+		<a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+			<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+			<span class="sr-only">Previous</span>
+		</a>
+		<a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+			<span class="carousel-control-next-icon" aria-hidden="true"></span>
+			<span class="sr-only">Next</span>
+		</a>
 	</div>
 </div>
-<div class="container">
-	<div class="jumbotron text-center border my-1">
-		<h3>Total Members: {{tot_members}}</h3>
-	</div>
-</div>
+
+
 
 <div class="jumbotron jumbotron-fluid text-center my-3 border rounded bg-dark text-white">
 	<h2>Letest Blogs</h2>
@@ -63,7 +124,7 @@
 				<h4>{{blog.title}}</h4>
 				<div class="preview" style="overflow-wrap: anywhere;">
 					<p>
-						{{blog.blog |safe| truncatechars:200}}
+						{{blog.blog | safe | truncatechars:200}}
 					</p>
 				</div>
 				<a class="btn btn-info" role='button' href="/blog/{{blog.title}}">Read More</a>
@@ -106,7 +167,7 @@
 				<h4>{{blog.title}}</h4>
 				<div class="preview" style="overflow-wrap: anywhere;">
 					<p>
-						{{blog.blog |safe| truncatechars:200}}
+						{{blog.blog | safe | truncatechars:200}}
 					</p>
 				</div>
 				<a class="btn btn-info" role='button' href="/blog/{{blog.title}}">Read More</a>
@@ -149,9 +210,9 @@
 			<div>
 				<h4>{{blog.title}}</h4>
 				<div class="preview" style="overflow-wrap: anywhere;">
-					<p>
-						{{blog.blog |safe| truncatechars:200}}
-					</p>
+
+					{{blog.blog | safe | truncatechars:200}}
+
 				</div>
 				<a class="btn btn-info" role='button' href="/blog/{{blog.title}}">Read More</a>
 			</div>

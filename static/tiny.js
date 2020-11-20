@@ -10,6 +10,7 @@ script.onload = function() {
 	tinymce.init({
 		selector: '#id_blog',
 		height: 600,
+		inline_styles: true,
 		width:1000,
 		plugins: [
 			'advlist autolink link image lists charmap print preview hr anchor pagebreak',

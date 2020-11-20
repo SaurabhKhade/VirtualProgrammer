@@ -48,8 +48,17 @@ def home(request,msgkey='',msg=''):
 		liked_insights[blog.id]=[likes,comments,views]
 	context['liked_insights']=liked_insights
 	
-	context['tot_blogs']=Blog.objects.all().count()
 	context['tot_members']=User.objects.all().count()
+	blogs=Blog.objects.all()
+	context['tot_blogs']=blogs.count()
+	context['tot_comments']=BlogComment.objects.filter(parent=None).count()
+	context['tot_replies']=BlogComment.objects.all().exclude(parent=None).count()
+	views=0
+	for blog in blogs:
+		views+=blog.views
+	context['tot_views']=views
+	context['tot_likes']=Like.objects.all().count()
+	
 	return render(request,'home/index.html',context)
 	
 
